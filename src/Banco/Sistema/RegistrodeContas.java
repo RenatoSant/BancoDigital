@@ -10,6 +10,7 @@ public class RegistrodeContas {
 
     Map<String, ContaCorrente> contaCorrenteMap;
 
+
     public RegistrodeContas() {
         this.contaCorrenteMap = new HashMap<>();
     }
@@ -18,12 +19,14 @@ public class RegistrodeContas {
         contaCorrenteMap.put(cliente.getCpf(), contaCorrente);
     }
 
+
     public void removerContaCorrente(Cliente cliente) {
         contaCorrenteMap.remove(cliente.getCpf());
     }
 
-    public void buscarContaCorrente(Cliente cliente) {
-        System.out.println(contaCorrenteMap.get(cliente.getCpf()));
-    }
+    public void mostrarContaCorrente(String string) {
+        System.out.println(contaCorrenteMap.get(string));}
+
+
 
 }

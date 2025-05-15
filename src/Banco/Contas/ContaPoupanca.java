@@ -2,7 +2,7 @@ package Banco.Contas;
 
 public class ContaPoupanca extends Conta {
 
-    private final static double juros = 0.05; // 5% de juros
+    private final static double juros = 0.005; // 5% de juros
 
 
     public ContaPoupanca(String nomeCliente, int agencia, int numeroConta) {
@@ -13,6 +13,8 @@ public class ContaPoupanca extends Conta {
         if (valor > 0) {
             double novoSaldo = getSaldo() + valor;
             setSaldo(novoSaldo);
+            System.out.println("Depósito de " + valor + " realizado com sucesso. Novo saldo: " + novoSaldo);
+            renderJuros();
         } else {
             System.out.println("Valor de depósito inválido.");
         }
@@ -43,6 +45,12 @@ public class ContaPoupanca extends Conta {
         } else {
             System.out.println("Valor de transferência inválido ou saldo insuficiente.");
         }
+    }
+
+    public void renderJuros() {
+        double jurosAcumulados = getSaldo() * juros;
+        double novoSaldo = getSaldo() + jurosAcumulados;
+        setSaldo(novoSaldo);
     }
 
     public void extrato() {

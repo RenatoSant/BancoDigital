@@ -1,11 +1,5 @@
 package Banco.Contas;
 
-import Banco.Clientes.Cliente;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ContaCorrente extends Conta {
 
@@ -27,27 +21,42 @@ public class ContaCorrente extends Conta {
         if (valor > 0 && valor <= getSaldo()) {
             double novoSaldo = getSaldo() - valor;
             setSaldo(novoSaldo);
+            System.out.println("Saque realizado com sucesso. Novo saldo: " + getSaldo());
         } else {
             System.out.println("Valor de saque inválido ou saldo insuficiente.");
         }
+
     }
 
-    public void transferirContaCorrente(ContaCorrente contaDestino, double valor) {
-        if (valor > 0 && valor <= getSaldo()) {
-            sacar(valor);
-            contaDestino.depositar(valor);
+    public void transferirContaCorrente(ContaCorrente contaOrigem, ContaCorrente contaDestino, double valor) {
+        if (valor > 0 && valor <= contaOrigem.getSaldo()) {
+            double novoSaldoOrigem = contaOrigem.getSaldo() - valor;
+            double novoSaldoDestino = contaDestino.getSaldo() + valor;
+            contaOrigem.setSaldo(novoSaldoOrigem);
+            contaDestino.setSaldo(novoSaldoDestino);
+            System.out.println("Transferência de " + valor + " realizada com sucesso. Novo saldo: " + novoSaldoOrigem);
         } else {
             System.out.println("Valor de transferência inválido ou saldo insuficiente.");
         }
     }
 
-    public void transferirContaPoupanca(ContaPoupanca contaDestino, double valor) {
+    public void transferirCorrentePoupanca(double valor) {
         if (valor > 0 && valor <= getSaldo()) {
-            sacar(valor);
-            contaDestino.depositar(valor);
+            double novoSaldo = getSaldo() - valor;
+            setSaldo(novoSaldo);
         } else {
-            System.out.println("Valor de transferência inválido ou saldo insuficiente.");
+            System.out.println("saldo insuficiente.");
         }
+    }
+
+    public void depositartransferencia(double valor){
+        if (valor > 0) {
+            double novoSaldo = getSaldo() + valor;
+            setSaldo(novoSaldo);
+        } else {
+            System.out.println("Valor de depósito inválido.");
+        }
+
     }
 
     public void extrato() {

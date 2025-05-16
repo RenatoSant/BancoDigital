@@ -30,7 +30,8 @@ public class Sistema extends SistemaMenu{
         System.out.println("3. Sacar");
         System.out.println("4. Extrato Bancario");
         System.out.println("5. Transferir");
-        System.out.println("6. Sair");
+        System.out.println("6. Deletar conta");
+        System.out.println("7. Sair");
 
         int opcao = scanner.nextInt();
         scanner.nextLine();
@@ -47,7 +48,13 @@ public class Sistema extends SistemaMenu{
         if (opcao == 4){
             menuExtrato();
         }
-        if(opcao == 6){
+        if (opcao == 5){
+            menuTransferir();
+        }
+        if (opcao == 6){
+            menuDeletarConta();
+        }
+        if(opcao == 7){
             System.out.println("Saindo do sistema...");
 
         }

@@ -3,6 +3,8 @@ package Banco.Sistema;
 import Banco.Clientes.Cliente;
 import Banco.Contas.ContaCorrente;
 import Banco.Contas.ContaPoupanca;
+import Banco.Registro.RegistrodeContas;
+import Banco.Registro.RegistrodePoupanca;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -17,13 +19,11 @@ public class SistemaMenu {
     RegistrodePoupanca registrodeContasPoupanca = new RegistrodePoupanca();
 
     public void menuDepositoCorrente (double valor, String cpf){
-        ContaCorrente contaCorrente = registrodeContasCorrente.contaCorrenteMap.get(cpf);
-        contaCorrente.depositar(valor);
+        registrodeContasCorrente.depositarContaCorrente(cpf,valor);
     }
 
     public void menuDepositoPoupanca (double valor, String cpf){
-        ContaPoupanca contaPoupanca = registrodeContasPoupanca.contaPoupancaMap.get(cpf);
-        contaPoupanca.depositar(valor);
+        registrodeContasPoupanca.depositarContaPoupanca(cpf,valor);
     }
 
     public void menuDeposito (){
@@ -49,12 +49,10 @@ public class SistemaMenu {
         }
     }
     public void menuSacarCorrente(double valor, String cpf){
-        ContaCorrente contaCorrente = registrodeContasCorrente.contaCorrenteMap.get(cpf);
-        contaCorrente.sacar(valor);
+        registrodeContasCorrente.sacarContaCorrente(cpf,valor);
     }
     public void menuSacarPoupanca(double valor, String cpf){
-        ContaPoupanca contaPoupanca = registrodeContasPoupanca.contaPoupancaMap.get(cpf);
-        contaPoupanca.sacar(valor);
+        registrodeContasPoupanca.sacarContaPoupanca(cpf,valor);
     }
     public void menuSaque(){
         System.out.println("Selecione uma opção:");
@@ -95,8 +93,7 @@ public class SistemaMenu {
             registrodeContasCorrente.mostrarContaCorrente(cpf);
         }
         if (opcao == 2){
-            ContaPoupanca contaPoupanca = registrodeContasPoupanca.contaPoupancaMap.get(cpf);
-            contaPoupanca.extrato();
+            registrodeContasPoupanca.mostrarContaPoupanca(cpf);
         }
     }
     public void menuCriarContaCorrente(){
@@ -142,4 +139,105 @@ public class SistemaMenu {
             menuCriarContaPoupanca();
         }
     }
+
+    public void menuTransferir(){
+        System.out.println("Selecione uma opção:");
+        System.out.println("1. Transferir de conta corrente para conta corrente");
+        System.out.println("2. Transferir conta poupança para conta poupança");
+        System.out.println("3. Transferir conta poupança para conta corrente");
+        System.out.println("4. Transferir conta corrente para conta poupança");
+        System.out.println("5. Sair");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        if (opcao == 1){
+            menuTransferirContaCorrente();
+        }
+        if (opcao == 2){
+            menuTransferirContaPoupanca();
+        }
+        if (opcao == 3){
+            menuPoupancaCorrente();
+        }
+        if (opcao == 4){
+            menuCorrentePoupanca();
+        }
+    }
+
+    public void menuTransferirContaCorrente(){
+        System.out.println("Digite o cpf da conta de origem: ");
+        String cpfOrigem = scanner.nextLine();
+        System.out.println("Digite o cpf da conta de destino: ");
+        String cpfDestino = scanner.nextLine();
+        System.out.println("Valor a transferir: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+        registrodeContasCorrente.transferirContaCorrente(cpfOrigem,cpfDestino, valor);
+    }
+
+    public void menuTransferirContaPoupanca(){
+        System.out.println("Digite o cpf da conta de origem: ");
+        String cpfOrigem = scanner.nextLine();
+        System.out.println("Digite o cpf da conta de destino: ");
+        String cpfDestino = scanner.nextLine();
+        System.out.println("Valor a transferir: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+        registrodeContasPoupanca.transferirContaPoupanca(cpfOrigem,cpfDestino, valor);
+    }
+
+    public void menuCorrentePoupanca(){
+        System.out.println("Digite o cpf da conta de origem: ");
+        String cpfOrigem = scanner.nextLine();
+        System.out.println("Digite o cpf da conta de destino: ");
+        String cpfDestino = scanner.nextLine();
+        System.out.println("Valor a transferir: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+        registrodeContasCorrente.transferirCorrentePoupanca(cpfOrigem, valor);
+        registrodeContasPoupanca.depositartransferencia(cpfDestino, valor);
+    }
+
+    public void menuPoupancaCorrente(){
+        System.out.println("Digite o cpf da conta de origem: ");
+        String cpfOrigem = scanner.nextLine();
+        System.out.println("Digite o cpf da conta de destino: ");
+        String cpfDestino = scanner.nextLine();
+        System.out.println("Valor a transferir: ");
+        double valor = scanner.nextDouble();
+        scanner.nextLine();
+        registrodeContasPoupanca.transferirPoupancaCorrente(cpfOrigem,valor);
+        registrodeContasCorrente.depositartransferencia(cpfDestino, valor);
+    }
+
+    public void menuDeletarContaCorrente(){
+        System.out.println("Digite seu cpf: ");
+        System.out.println("Cpf: ");
+        String cpf = scanner.nextLine();
+        registrodeContasCorrente.removerContaCorrente(cpf);
+    }
+
+    public void menuDeletarContaPoupanca(){
+        System.out.println("Digite seu cpf: ");
+        System.out.println("Cpf: ");
+        String cpf = scanner.nextLine();
+        registrodeContasPoupanca.removerContaPoupanca(cpf);
+    }
+
+    public void menuDeletarConta(){
+        System.out.println("Selecione uma opção:");
+        System.out.println("1. Deletar conta corrente");
+        System.out.println("2. Deletar conta poupança");
+        System.out.println("3. Sair");
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        if (opcao == 1){
+            menuDeletarContaCorrente();
+        }
+        if (opcao == 2){
+            menuDeletarContaPoupanca();
+        }
+    }
+
 }
